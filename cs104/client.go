@@ -201,7 +201,9 @@ func (sf *Client) recvLoop() {
 				if rdCnt == length {
 					apdu := rawData[:length]
 					sf.Debug("RX Raw[% x]", apdu)
-					sf.rcvRaw <- apdu
+				     	if atomic.LoadUint32(&sf.isActive) == active {
+				      		sf.rcvRaw <- apdu
+				     	}
 				}
 			}
 		}
