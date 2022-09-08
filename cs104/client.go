@@ -201,9 +201,8 @@ func (sf *Client) recvLoop() {
 				if rdCnt == length {
 					apdu := rawData[:length]
 					sf.Debug("RX Raw[% x]", apdu)
-				     	if atomic.LoadUint32(&sf.isActive) == active {
-				      		sf.rcvRaw <- apdu
-				     	}
+					sf.Debug("RX rcvRaw[%s]", &sf.isActive)
+				      	sf.rcvRaw <- apdu
 				}
 			}
 		}
@@ -295,6 +294,7 @@ func (sf *Client) run(ctx context.Context) {
 		sf.setConnectStatus(disconnected)
 		checkTicker.Stop()
 		_ = sf.conn.Close() // 连锁引发cancel
+		sf.cleanUp()
 		sf.wg.Wait()
 		sf.onConnectionLost(sf)
 		sf.Debug("run stopped!")
