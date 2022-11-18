@@ -536,7 +536,7 @@ func (sf *SrvSession) Send(u *asdu.ASDU) error {
 	if err != nil {
 		return err
 	}
-	sf.sendASDU <- data:
+	sf.sendASDU <- data
 	return nil
 }
 
