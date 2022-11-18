@@ -536,11 +536,7 @@ func (sf *SrvSession) Send(u *asdu.ASDU) error {
 	if err != nil {
 		return err
 	}
-	select {
-	case sf.sendASDU <- data:
-	default:
-		return ErrBufferFulled
-	}
+	sf.sendASDU <- data:
 	return nil
 }
 
