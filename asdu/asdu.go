@@ -32,6 +32,8 @@ var (
 	ParamsNarrow = &Params{CauseSize: 1, CommonAddrSize: 1, InfoObjAddrSize: 1, InfoObjTimeZone: time.UTC}
 	// ParamsWide is the largest configuration.
 	ParamsWide = &Params{CauseSize: 2, CommonAddrSize: 2, InfoObjAddrSize: 3, InfoObjTimeZone: time.UTC}
+	// ParamsSiFang 
+	ParamsSiFang = &Params{CauseSize: 2, CommonAddrSize: 2, InfoObjAddrSize: 1, InfoObjTimeZone: time.UTC}
 )
 
 // Params 定义了ASDU相关特定参数
