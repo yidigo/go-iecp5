@@ -1,3 +1,3 @@
-module github.com/thinkgos/go-iecp5
+module github.com/yidigo/go-iecp5
 
 go 1.15
