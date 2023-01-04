@@ -391,9 +391,17 @@ func (sf *ASDU) GetSingleCmd() SingleCommandInfo {
 	var s SingleCommandInfo
 
 	s.Ioa = sf.DecodeInfoObjAddr()
-	value := sf.DecodeByte()
+	//value := sf.DecodeByte()
+	value := sf.infoObj[3]
 	s.Value = value&0x01 == 0x01
-	s.Qoc = ParseQualifierOfCommand(value & 0xfe)
+	isSelect := false
+	if (value == 0x80) || (value == 0x81) {
+		isSelect = true
+	}
+	s.Qoc = QualifierOfCommand{
+		Qual:     QOCQual((sf.infoObj[0] >> 2) & 0x1f),
+		InSelect: isSelect,
+	}
 
 	switch sf.Type {
 	case C_SC_NA_1:
