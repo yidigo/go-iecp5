@@ -5,6 +5,8 @@
 package asdu
 
 import (
+	"encoding/binary"
+	"math"
 	"time"
 )
 
@@ -498,6 +500,28 @@ func (sf *ASDU) GetSetpointFloatCmd() SetpointCommandFloatInfo {
 
 	cmd.Ioa = sf.DecodeInfoObjAddr()
 	cmd.Value = sf.DecodeFloat32()
+	cmd.Qos = ParseQualifierOfSetpointCmd(sf.DecodeByte())
+
+	switch sf.Type {
+	case C_SE_NC_1:
+	case C_SE_TC_1:
+		cmd.Time = sf.DecodeCP56Time2a()
+	default:
+		panic(ErrTypeIDNotMatch)
+	}
+
+	return cmd
+}
+
+// GetSetpointFloatCmd [C_SE_NC_1] or [C_SE_TC_1] 获取设定命令，短浮点数信息体_特殊
+func (sf *ASDU) GetSetpointFloatSpecialCmd() SetpointCommandFloatInfo {
+	var cmd SetpointCommandFloatInfo
+
+	cmd.Ioa = sf.DecodeInfoObjAddr()
+
+	cmd.Value = math.Float32frombits(binary.LittleEndian.Uint32(sf.infoObj[3:6]))
+	//sf.infoObj = sf.infoObj[3:]
+
 	cmd.Qos = ParseQualifierOfSetpointCmd(sf.DecodeByte())
 
 	switch sf.Type {
