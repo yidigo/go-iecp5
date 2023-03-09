@@ -519,7 +519,7 @@ func (sf *ASDU) GetSetpointFloatSpecialCmd() SetpointCommandFloatInfo {
 
 	cmd.Ioa = sf.DecodeInfoObjAddr()
 
-	cmd.Value = math.Float32frombits(binary.LittleEndian.Uint32(sf.infoObj[3:6]))
+	cmd.Value = math.Float32frombits(binary.LittleEndian.Uint32(sf.infoObj[3:7]))
 	//sf.infoObj = sf.infoObj[3:]
 
 	cmd.Qos = ParseQualifierOfSetpointCmd(sf.DecodeByte())
