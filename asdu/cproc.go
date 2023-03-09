@@ -522,7 +522,7 @@ func (sf *ASDU) GetSetpointFloatSpecialCmd() SetpointCommandFloatInfo {
 	cmd.Value = math.Float32frombits(binary.LittleEndian.Uint32(sf.infoObj[3:7]))
 	//sf.infoObj = sf.infoObj[3:]
 
-	cmd.Qos = ParseQualifierOfSetpointCmd(sf.DecodeByte())
+	cmd.Qos = ParseQualifierOfSetpointCmd(sf.infoObj[len(sf.infoObj)-1])
 
 	switch sf.Type {
 	case C_SE_NC_1:
