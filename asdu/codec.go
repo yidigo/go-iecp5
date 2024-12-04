@@ -72,7 +72,7 @@ func (sf *ASDU) DecodeInfoObjAddr() InfoObjAddr {
 		sf.infoObj = sf.infoObj[2:]
 	case 3:
 		ioa = InfoObjAddr(sf.infoObj[0]) | (InfoObjAddr(sf.infoObj[1]) << 8) | (InfoObjAddr(sf.infoObj[2]) << 16)
-// 		sf.infoObj = sf.infoObj[3:]
+ 		sf.infoObj = sf.infoObj[3:]
 	default:
 		panic(ErrParam)
 	}
